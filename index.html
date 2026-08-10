@@ -24,22 +24,6 @@
     font-weight: 600;
   }
 
-  #login-view { text-align: center; }
-
-  #login-btn {
-    background: #1db954;
-    color: #0d0d0d;
-    border: none;
-    padding: 12px 28px;
-    border-radius: 999px;
-    font-size: 14px;
-    font-weight: 600;
-    cursor: pointer;
-    text-shadow: none;
-  }
-
-  #login-btn:hover { background: #1ed760; }
-
   #open-playlist {
     position: fixed;
     top: 16px;
@@ -59,7 +43,6 @@
 
   /* ---- bottom-docked mini player ---- */
   #player-view {
-    display: none;
     position: fixed;
     bottom: 16px;
     left: 50%;
@@ -134,17 +117,15 @@
     flex-shrink: 0;
   }
 
-  .controls button, .volume-wrap button {
+  .controls button {
     background: none;
     border: none;
     color: #ffffff;
     cursor: pointer;
     padding: 4px;
-    position: relative;
     text-shadow: none;
   }
 
-  #shuffle-btn svg, #repeat-btn svg { width: 14px; height: 14px; fill: currentColor; }
   #prev-btn svg, #next-btn svg { width: 20px; height: 20px; fill: currentColor; }
 
   #play-pause {
@@ -158,57 +139,6 @@
     margin: 0 2px;
   }
   #play-pause svg { width: 20px; height: 20px; fill: #1a1a1a; }
-
-  #shuffle-btn.active, #repeat-btn.active { color: #1db954; }
-
-  .repeat-one-dot {
-    position: absolute;
-    bottom: 2px;
-    right: 0px;
-    width: 5px;
-    height: 5px;
-    border-radius: 50%;
-    background: #1db954;
-    display: none;
-  }
-  #repeat-btn.repeat-one .repeat-one-dot { display: block; }
-
-  .volume-wrap { position: relative; flex-shrink: 0; }
-  .volume-wrap svg { width: 14px; height: 14px; fill: currentColor; }
-
-  .volume-popup {
-    display: none;
-    position: absolute;
-    bottom: 44px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(13, 13, 13, 0.9);
-    border-radius: 10px;
-    padding: 10px 8px;
-    height: 100px;
-    align-items: center;
-  }
-  .volume-popup.open { display: flex; }
-
-  #volume-slider {
-    writing-mode: vertical-lr;
-    direction: rtl;
-    width: 4px;
-    height: 80px;
-    -webkit-appearance: none;
-    border-radius: 4px;
-    background: #2a2a2a;
-    outline: none;
-  }
-
-  #volume-slider::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    border-radius: 50%;
-    background: #ffffff;
-    cursor: pointer;
-  }
 
   .progress-bar {
     flex: 1;
@@ -234,6 +164,14 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+  #embed-host {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
 </style>
 </head>
 <body>
@@ -241,10 +179,6 @@
   <a id="open-playlist" href="https://open.spotify.com/playlist/0UT7EGipZpUqJfc81YHROT" target="_blank" rel="noopener">Open in Spotify</a>
 
   <div class="heading">ಕನ್ನಡವೇ ಒಂದು ಭಾವನೆ</div>
-
-  <div id="login-view">
-    <button id="login-btn">Connect Spotify</button>
-  </div>
 
   <div id="player-view">
     <div class="bar">
@@ -260,9 +194,6 @@
       </div>
 
       <div class="controls">
-        <button id="shuffle-btn" title="Shuffle">
-          <svg viewBox="0 0 24 24"><path d="M10.59 9.17L5.41 4 4 5.41l5.17 5.17zm4.34-4.76l1.41 1.41L14.42 7.7l1.41 1.41 1.92-1.92L20 9.83V4h-5.83zM14.83 13.41L14 14.24l1.92 1.92-1.92 1.92 1.41 1.41 1.92-1.92L20 20.17V14.34h-5.17l1.41 1.41zM4 18.59L9.17 13.41 10.59 14.83 5.41 20z"/></svg>
-        </button>
         <button id="prev-btn" title="Previous">
           <svg viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
         </button>
@@ -272,26 +203,16 @@
         <button id="next-btn" title="Next">
           <svg viewBox="0 0 24 24"><path d="M16 6h2v12h-2zm-9.5 6L15 18V6z"/></svg>
         </button>
-        <button id="repeat-btn" title="Repeat">
-          <svg viewBox="0 0 24 24"><path d="M7 7h10v3l4-4-4-4v3H5v6h2zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2z"/></svg>
-          <span class="repeat-one-dot"></span>
-        </button>
-        <div class="volume-wrap">
-          <button id="volume-btn" title="Volume">
-            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1-3.29-2.5-4.03v8.05c1.5-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
-          </button>
-          <div id="volume-popup" class="volume-popup">
-            <input type="range" id="volume-slider" min="0" max="100" value="80">
-          </div>
-        </div>
       </div>
     </div>
 
     <div id="up-next">Up next: <span id="up-next-name">—</span></div>
-    <div id="status"></div>
+    <div id="status">Loading playlist...</div>
   </div>
 
-  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <div id="embed-host"></div>
+
+  <script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
   <script src="app.js"></script>
 </body>
 </html>
