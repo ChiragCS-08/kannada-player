@@ -41,7 +41,7 @@ function loadIndex(index, autoplay) {
 }
 
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  fetch('/api/playlist-tracks')
+  fetch('tracks.json')
     .then(res => res.json())
     .then(data => {
       tracks = data;
