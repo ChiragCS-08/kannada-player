@@ -54,8 +54,8 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
 
       IFrameAPI.createController(els.embedHost, {
         uri: tracks[currentIndex].uri,
-        width: '1',
-        height: '1'
+        width: '300',
+        height: '152'
       }, embedController => {
         controller = embedController;
         els.status.textContent = 'Ready. Press play.';
